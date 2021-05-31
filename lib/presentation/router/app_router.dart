@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prj1/business_logic/bloc/settings_bloc/settings_bloc.dart';
 // import 'package:prj1/business_logic/bloc/counter_bloc.dart';
 import 'package:prj1/presentation/screens/screens.dart';
 import 'package:prj1/presentation/screens/settings_screen.dart';
@@ -75,9 +76,12 @@ class AppRoute {
         break;
       case '/settings':
         return MaterialPageRoute(
-          builder: (_) => SettingsScreen(
-            title: 'Settings',
-            color: Colors.blueGrey,
+          builder: (_) => BlocProvider<SettingsBloc>(
+            create: (context) => SettingsBloc(),
+            child: SettingsScreen(
+              title: 'Settings',
+              color: Colors.blueGrey,
+            ),
           ),
         );
         break;

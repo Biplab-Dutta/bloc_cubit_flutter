@@ -9,48 +9,45 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({this.title, this.color});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SettingsBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-          backgroundColor: color,
-        ),
-        body: BlocConsumer<SettingsBloc, SettingsState>(
-          listener: (context, state) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'App: ${state.appNotification}, ' +
-                      'Email: ${state.emailNotification}',
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(title),
+        backgroundColor: color,
+      ),
+      body: BlocConsumer<SettingsBloc, SettingsState>(
+        listener: (context, state) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'App: ${state.appNotification}, ' +
+                    'Email: ${state.emailNotification}',
+              ),
+              duration: Duration(milliseconds: 600),
+            ),
+          );
+        },
+        builder: (context, state) {
+          return Container(
+            child: Column(
+              children: <Widget>[
+                SwitchListTile(
+                  title: Text('App Notifications'),
+                  onChanged: (_) {
+                    context.read<SettingsBloc>().add(AppToggle());
+                  },
+                  value: state.appNotification,
                 ),
-                duration: Duration(milliseconds: 600),
-              ),
-            );
-          },
-          builder: (context, state) {
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  SwitchListTile(
-                    title: Text('App Notifications'),
-                    onChanged: (_) {
-                      context.read<SettingsBloc>().add(AppToggle());
-                    },
-                    value: state.appNotification,
-                  ),
-                  SwitchListTile(
-                    title: Text('Email Notifications'),
-                    onChanged: (_) {
-                      context.read<SettingsBloc>().add(EmailToggle());
-                    },
-                    value: state.emailNotification,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                SwitchListTile(
+                  title: Text('Email Notifications'),
+                  onChanged: (_) {
+                    context.read<SettingsBloc>().add(EmailToggle());
+                  },
+                  value: state.emailNotification,
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
