@@ -21,10 +21,8 @@ class SettingsScreen extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  'App: ' +
-                      state.appNotification.toString() +
-                      ', Email: ' +
-                      state.emailNotification.toString(),
+                  'App: ${state.appNotification}, ' +
+                      'Email: ${state.emailNotification}',
                 ),
                 duration: Duration(milliseconds: 600),
               ),
